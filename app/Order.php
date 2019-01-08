@@ -9,8 +9,7 @@ class Order extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['user_id', 'payment_id', 'address', 'is_sent'
-    ];
+    protected $fillable = ['user_id', 'payment_id', 'address', 'phone', 'postal_code', 'is_sent'];
 
 
     public function content(){
