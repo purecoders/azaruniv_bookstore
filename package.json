@@ -11,12 +11,23 @@
     },
     "devDependencies": {
         "axios": "^0.18",
-        "bootstrap": "^4.0.0",
-        "popper.js": "^1.12",
+        "bootstrap-v4-rtl": "^4.1.1-0",
+        "browser-sync": "^2.18.13",
+        "browser-sync-webpack-plugin": "^2.0.1",
+        "copy-webpack-plugin": "^4.5.2",
+        "font-awesome": "^4.7.0",
         "cross-env": "^5.1",
+        "popper.js": "^1.12",
         "jquery": "^3.2",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
+        "slick-carousel": "^1.8.1",
         "vue": "^2.5.7"
+    },
+    "dependencies": {
+        "ng-click-outside": "^4.0.0",
+        "v-click-outside": "^2.0.2",
+        "vue-click-outside": "^1.0.7",
+        "webpack-bundle-analyzer": "^3.0.3"
     }
 }
