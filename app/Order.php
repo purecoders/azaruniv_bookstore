@@ -9,7 +9,7 @@ class Order extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['user_id', 'payment_id', 'address', 'phone', 'postal_code', 'is_sent'];
+    protected $fillable = ['user_id', 'payment_id', 'address', 'phone', 'postal_code', 'is_sent', 'trace_no'];
 
 
     public function content(){
@@ -18,5 +18,9 @@ class Order extends Model
 
     public function payment(){
       return $this->hasOne('App\Payment');
+    }
+
+    public function user(){
+      return $this->belongsTo('App\User');
     }
 }

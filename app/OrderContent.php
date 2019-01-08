@@ -10,4 +10,8 @@ class OrderContent extends Model
     use SoftDeletes;
 
     protected $fillable = ['order_id', 'book_id', 'count'];
+
+    public function book(){
+      return $this->belongsTo('App\Book');
+    }
 }
