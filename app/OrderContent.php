@@ -12,6 +12,6 @@ class OrderContent extends Model
     protected $fillable = ['order_id', 'book_id', 'count'];
 
     public function book(){
-      return $this->belongsTo('App\Book');
+      return $this->belongsTo('App\Book')->withTrashed();
     }
 }

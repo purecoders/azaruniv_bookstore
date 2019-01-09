@@ -13,8 +13,13 @@ class Cart extends Model
     protected $fillable = ['user_id'];
 
 
-    public function content(){
+    public function contents(){
       return $this->hasMany('App\CartContent');
+    }
+
+
+    public function user(){
+      return $this->belongsTo('App\User');
     }
 
 

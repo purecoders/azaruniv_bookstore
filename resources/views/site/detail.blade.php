@@ -13,15 +13,35 @@
                             <span>{{number_format($book->price)}}</span>
                             <span class="ml-2">تومان</span>
                         </h5>
-                        @if($book->stock > 0)
-                        <form action="" class="d-inline" onsubmit="return confirm('آیا می خواهید این کتاب به سبد خرید شما اضافه شود؟')">
-                            <button type="submit" class="btn btn-success mt-4 "> افزودن به سبد خرید <i
-                                        class="fa fa-shopping-cart"></i>
-                            </button>
-                        </form>
-                        @endif
 
-                        <a href="{{route('user-cart')}}" class="btn btn-outline-info mt-4 ">مشاهده سبد خرید</a>
+
+                        @if(auth()->user() !== null)
+                            @if(auth()->user()->role !== 'admin')
+
+                                @if($book->stock > 0)
+                                    <form action="{{route('user-cart-add')}}" method="post" class="d-inline" onsubmit="return confirm('آیا می خواهید این کتاب به سبد خرید شما اضافه شود؟')">
+                                        @csrf
+                                        <input type="hidden" name="book_id" value="{{$book->id}}">
+                                        <button type="submit" class="btn btn-success mt-4 "> افزودن به سبد خرید <i
+                                                    class="fa fa-shopping-cart"></i>
+                                        </button>
+                                    </form>
+                                @endif
+                                <a href="{{route('user-cart')}}" class="btn btn-outline-info mt-4 ">مشاهده سبد خرید</a>
+
+                            @endif
+                        @else
+
+                            @if($book->stock > 0)
+                                <a href="{{route('login')}}">
+                                    <button type="submit" class="btn btn-success mt-4 "> افزودن به سبد خرید
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </button>
+                                </a>
+                            @endif
+                            <a href="{{route('user-cart')}}" class="btn btn-outline-info mt-4 ">مشاهده سبد خرید</a>
+
+                        @endif
                         @if($book->stock < 1)
                         <div class="mt-4">
                             <span class="alert alert-danger p-1 text-center alert-unavailable ">نا موجود!</span>
@@ -71,5 +91,9 @@
                 </div>
             </div>
         </div>
+
+        @if($message)
+            <span class="server-response sr-success active">{{$message}}</span>
+        @endif
     </section>
 @endsection

@@ -6,6 +6,7 @@ use App\Book;
 use App\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class SiteController extends Controller
 {
@@ -27,6 +28,7 @@ class SiteController extends Controller
 
 
   public function bookDetail($id){
+    $message = Session::get('message');
     $best_seller_ids = DB::select("SELECT book_id,count(book_id) as total FROM `order_contents`  group by(book_id) order by total desc limit 10");
     $best_sellers = array();
     foreach ($best_seller_ids as $book_id) {
@@ -38,7 +40,7 @@ class SiteController extends Controller
 
     $book = Book::find($id);
 
-    return view('site.detail', compact(['book', 'best_sellers']));
+    return view('site.detail', compact(['book', 'best_sellers', 'message']));
   }
 
 }

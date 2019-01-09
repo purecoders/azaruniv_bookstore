@@ -4,18 +4,23 @@
         <div class="card">
             <div class="card-header bg-blue-one pb-3  ">
                 <ul class="nav nav-tabs card-header-tabs d-flex justify-content-between">
-                    <li  class="nav-item "><a id="userCardNavProfile" class="nav-link text-white" href="{{route('user-profile')}}">
-                            <i class="fa fa-user mr-1"></i>
-                            پروفایل
-                        </a></li>
-                    <li class="nav-item"><a  id="userCardNavOrders"  class="nav-link text-white " href="{{route('user-orders')}}">
-                            <i class="fa fa-shopping-cart mr-1"></i>
-                                سفارشات من
-                        </a></li>
+                    {{--<li  class="nav-item "><a id="userCardNavProfile" class="nav-link text-white" href="{{route('user-profile')}}">--}}
+                            {{--<i class="fa fa-user mr-1"></i>--}}
+                            {{--پروفایل--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+
                     <li  class="nav-item "><a id="userCardNavCart"  class="nav-link text-white" href="{{route('user-cart')}}">
                             <i class="fa fa-shopping-basket  mr-1"></i>
                             سبد خرید من
-                        </a></li>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a  id="userCardNavOrders"  class="nav-link text-white " href="{{route('user-orders')}}">
+                            <i class="fa fa-shopping-cart mr-1"></i>
+                                سفارشات من
+                        </a>
+                    </li>
+
 
                 </ul>
             </div>

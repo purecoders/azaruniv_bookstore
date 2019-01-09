@@ -7,15 +7,22 @@
                     <li  class="nav-item "><a id="adminCardNavOrders" class="nav-link text-white" href="{{route('admin-orders')}}">
                             <i class="fa fa-list mr-1"></i>
                             لیست سفارشات
-                        </a></li>
-                    <li class="nav-item"><a  id="adminCardNavSite"  class="nav-link text-white " href="{{route('admin-site')}}">
-                            <i class="fa fa-info mr-1"></i>
-                            اطلاعات سایت
-                        </a></li>
+                        </a>
+                    </li>
+
+
                     <li  class="nav-item "><a id="adminCardNavBooks"  class="nav-link text-white" href="{{route('admin-books')}}">
                             <i class="fa fa-books  mr-1"></i>
                             کتاب ها
-                        </a></li>
+                        </a>
+                    </li>
+
+                    <li class="nav-item"><a  id="adminCardNavSite"  class="nav-link text-white " href="{{route('admin-site')}}">
+                            <i class="fa fa-info mr-1"></i>
+                            اطلاعات سایت
+                        </a>
+                    </li>
+
 
                 </ul>
             </div>

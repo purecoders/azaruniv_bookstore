@@ -2,12 +2,268 @@
 
 namespace App\Http\Controllers;
 
+use App\BankOrder;
+use App\Book;
+use App\Cart;
+use App\CartContent;
+use App\Order;
+use App\OrderContent;
+use App\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
   public function __construct() {
-    $this->middleware('auth');
-    $this->middleware('user');
+    $this->middleware('auth', ['except' => ['cartPayVerify']]);
+    $this->middleware('user', ['except' => ['cartPayVerify']]);
   }
+
+
+  public function cart(){
+    $message = null;
+    $message = Session::get('message');
+    $cart = Auth::user()->cart;
+    $contents = $cart->contents;
+    $sum = 0;
+    foreach ($contents as $content) {
+      $sum += ($content->count) * ($content->book->price);
+    }
+    return view('user.cart', compact(['contents', 'sum', 'message']));
+  }
+
+  public function cartAdd(Request $request){
+    $this->validate($request,[
+      'book_id' => 'required|numeric'
+    ]);
+
+    $user = Auth::user();
+    $book = Book::find($request->book_id);
+    $cart = $user->cart;
+
+    if($cart == null){
+      $cart = Cart::create([
+        'user_id' => $user->id
+      ]);
+    }
+
+    if($book->stock > 0){
+      $contents = $cart->contents;
+      $isExist = false;
+      foreach ($contents as $content){
+        if($content->book_id == $book->id){
+          $isExist = true;
+          break;
+        }
+      }
+
+      if (!$isExist) {
+        $content = CartContent::create([
+          'cart_id' => $cart->id,
+          'book_id' => $book->id,
+          'count' => 1,
+        ]);
+        $message = 'به سبد خرید اضافه شد.';
+      }else{
+        $message = 'این محصول از قبل در سبد خرید شما موجود میباشد.';
+      }
+
+    }
+
+    return redirect(route('detail', $book->id))->with('message', $message);
+  }
+
+
+  public function cartRemove(Request $request){
+    $this->validate($request, [
+      'content_id' => 'required|numeric'
+    ]);
+
+    $content = CartContent::find($request->content_id);
+    $content->delete();
+    return redirect(route('user-cart'))->with('message', 'از سبد خرید شما حذف شد.');
+  }
+
+
+  public function cartMinus($content_id){
+    $content = CartContent::find($content_id);
+    if ($content->cart->user->id == Auth::user()->id   &&  $content->count > 1){
+      $content->count -= 1;
+      $content->save();
+      $message = 'تعداد محصول در سبد خرید کم شد.';
+    }else{
+      $message = null;
+    }
+
+    return redirect(route('user-cart'))->with('message', $message);
+  }
+
+  public function cartPlus($content_id){
+    $content = CartContent::find($content_id);
+    if ($content->cart->user->id == Auth::user()->id   &&  $content->book->stock > $content->count){
+      $content->count += 1;
+      $content->save();
+      $message = 'تعداد محصول در سبد خرید اضافه شد.';
+    }else{
+      $message = "بیشتر از $content->count عدد از این نوع محصول وجود ندارد.";
+    }
+
+    return redirect(route('user-cart'))->with('message', $message);
+  }
+
+  public function orders(){
+    $user = Auth::user();
+    $orders = $user->orders;
+    return view('user.orders', compact('orders'));
+  }
+
+
+
+
+
+
+  public function cartPay(Request $request){
+    $this->validate($request, [
+      'address' => 'required|string|max:3000',
+      'phone' => 'required|string|max:20|min:5',
+      'postal_code' => 'required|string|max:20',
+    ]);
+
+    $cart = Auth::user()->cart;
+    $contents = $cart->contents;
+    $amount = 0;
+    foreach ($contents as $content) {
+      $amount += ($content->count) * ($content->book->price);
+    }
+
+    if ($amount < 100) return redirect(route('user-cart'))->with('message', 'مبلغ قابل پرداخت بسیار کم میباشد');
+
+    foreach ($contents as $content){
+      if($content->count > $content->book->stock){
+        return redirect(route('user-cart'))->with('message', 'تعداد محصولات درخواستی شما بیشتر از تعداد موجود میباشد');
+      }
+    }
+
+
+    $order = BankOrder::create([
+      'cart_id' => $cart->id,
+      'address' => $request->address,
+      'phone' => $request->phone,
+      'postal_code' => $request->postal_code,
+      'amount' => (int) $amount,
+    ]);
+
+    $sadad = new Sadad(
+      env('SADAD_MERCHANT_ID'),
+      env('SADAD_TERMINAL_ID'),
+      env('SADAD_TERMINAL_KEY'),
+      env('SADAD_PAYMENT_IDENTITY')
+    );
+
+    $response = $sadad->request((int)($order->amount * 10), $order->id, route('user-cart-pay-verify'));
+
+    if($response->ResCode != 0){
+      $description = $response->Description;
+      return view('user.paymentFailed', compact('description'));
+    }else{
+      $sadad->redirect($response->Token);
+    }
+  }
+
+
+
+
+  public function cartPayVerify(Request $request){
+
+    $order_id = $request->OrderId;
+    $token = $request->Token;
+    $pay_res_code = $request->ResCode;
+
+    $order = BankOrder::find($order_id);
+
+
+    if ($pay_res_code != 0){
+      $description = 'تراکنش به دلایلی ناموفق بود لطفا دوباره امتحان کنید';
+      return view('user.paymentFailed', compact('description'));
+    }
+
+
+    $sadad = new Sadad(
+      env('SADAD_MERCHANT_ID'),
+      env('SADAD_TERMINAL_ID'),
+      env('SADAD_TERMINAL_KEY'),
+      env('SADAD_PAYMENT_IDENTITY')
+    );
+
+    $verify_response = $sadad->verify($token);
+    $res_code = $verify_response->ResCode;
+    if ($res_code == 0) {
+      $amount = $verify_response->Amount; //rial
+      $description = $verify_response->Description;
+      $retrival_ref_no = $verify_response->RetrivalRefNo;
+      $system_trace_no = $verify_response->SystemTraceNo;
+      $order_id = $verify_response->OrderId;
+    }
+
+    if($pay_res_code == 0 && $res_code == 0){
+      //success
+      $cart = $order->cart;
+      $user = $cart->user;
+      $contents = $cart->contents;
+
+
+      $payment = Payment::create([
+        'user_id' => $user->id,
+        'amount' => (int)(($order->amount)),
+        'is_success' => 1,
+        'retrival_ref_no' => $retrival_ref_no,
+        'system_trace_no' => $system_trace_no,
+      ]);
+
+      $new_order = Order::create([
+        'user_id' => $user->id,
+        'payment_id' => $payment->id,
+        'address' => $order->address,
+        'phone' => $order->phone,
+        'postal_code' => $order->postal_code,
+        'is_sent' => 0,
+        'trace_no' => '',
+      ]);
+
+      foreach ($contents as $content) {
+        $order_content = OrderContent::create([
+          'order_id' => $new_order->id,
+          'book_id' => $content->book_id,
+          'count' => $content->count,
+        ]);
+
+        $book = Book::find($content->book_id);
+        $book->stock -= $content->count;
+        $book->save();
+      }
+
+      foreach ($contents as $content) {
+        $content->delete();
+      }
+
+
+
+
+      return view('user.paymentSuccess', compact(['description', 'retrival_ref_no', 'system_trace_no', 'amount']));
+
+    }else{
+      //failed
+      $description = 'تراکنش نا موفق بود در صورت کسر مبلغ از حساب شما حداکثر پس از 72 ساعت مبلغ به حسابتان برمی گردد';
+      return view('user.paymentFailed', compact('description'));
+    }
+
+
+  }
+
+
+
+
+
+
 }

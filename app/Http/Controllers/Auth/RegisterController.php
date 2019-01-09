@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Cart;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -66,12 +67,18 @@ class RegisterController extends Controller
   protected function create(array $data)
   {
 //        return $data;
-    return User::create([
+     $user = User::create([
       'name' => $data['name'],
       'email' => $data['email'],
       'phone' => $data['phone'],
       'role' => 'user',
       'password' => Hash::make($data['password']),
     ]);
+
+     $cart = Cart::create([
+       'user_id' => $user->id,
+     ]);
+
+     return $user;
   }
 }
