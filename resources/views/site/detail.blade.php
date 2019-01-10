@@ -64,7 +64,7 @@
             </div>
             <div class="detail-container mt-4 p-3">
                 <h4 class="mt-3 mb-3">کتاب های پر فروش</h4>
-                <div  class="swiper-container most-sales-page-detail" dir="rtl">
+                <div id="DetailSlides"  class="swiper-container" dir="rtl">
                     <div class="swiper-wrapper text-center">
 
                         @foreach($best_sellers as $book)
