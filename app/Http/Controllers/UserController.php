@@ -167,7 +167,7 @@ class UserController extends Controller
       $description = $response->Description;
       return view('user.paymentFailed', compact('description'));
     }else{
-      $sadad->redirect($response->Token);
+      return redirect($sadad->getRedirectUrl().$response->Token);
     }
   }
 
@@ -177,10 +177,15 @@ class UserController extends Controller
   public function cartPayVerify(Request $request){
 
     $order_id = $request->OrderId;
-    $token = $request->Token;
+    $token = $request->token;
     $pay_res_code = $request->ResCode;
 
+
+    print_r($request);
+    exit;
+
     $order = BankOrder::find($order_id);
+
 
 
     if ($pay_res_code != 0){
@@ -206,7 +211,10 @@ class UserController extends Controller
       $order_id = $verify_response->OrderId;
     }
 
+
+
     if($pay_res_code == 0 && $res_code == 0){
+
       //success
       $cart = $order->cart;
       $user = $cart->user;
@@ -236,6 +244,7 @@ class UserController extends Controller
           'order_id' => $new_order->id,
           'book_id' => $content->book_id,
           'count' => $content->count,
+          'price' => $order->amount,
         ]);
 
         $book = Book::find($content->book_id);

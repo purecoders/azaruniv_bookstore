@@ -99,6 +99,9 @@ class Sadad {
 
 
 
+  public function getRedirectUrl(){
+    return $this->redirect_url;
+  }
 
 
   private function encrypt_pkcs7($str, $key){

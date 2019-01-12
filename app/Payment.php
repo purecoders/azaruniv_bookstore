@@ -10,6 +10,6 @@ class Payment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-      'user_id', 'amount', 'is_succes', 'retrival_ref_no', 'system_trace_no'
+      'user_id', 'amount', 'is_success', 'retrival_ref_no', 'system_trace_no'
     ];
 }
