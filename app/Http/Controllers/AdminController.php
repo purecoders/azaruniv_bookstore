@@ -6,6 +6,9 @@ use App\Book;
 use App\Order;
 use App\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -94,6 +97,9 @@ class AdminController extends Controller
       'image' => 'required|image',
     ]);
 
+    $is_important = 0;
+    if($request->is_important !== null) $is_important = 1;
+
     $image = $request->file('image');
 
     $file_extension = $image->getClientOriginalExtension();
@@ -112,6 +118,7 @@ class AdminController extends Controller
       'price' => $request->price,
       'stock' => $request->stock,
       'image_path' => $file_path,
+      'is_important' => $is_important,
     ]);
 
     return redirect(route('admin-books'));
@@ -138,6 +145,10 @@ class AdminController extends Controller
       'image' => 'image',
     ]);
 
+    $is_important = 0;
+    if($request->is_important !== null) $is_important = 1;
+
+
     $book = Book::find($request->book_id);
 
     $image = $request->file('image');
@@ -161,11 +172,46 @@ class AdminController extends Controller
     $book->price = $request->price;
     $book->stock = $request->stock;
     $book->image_path = $file_path;
+    $book->is_important = $is_important;
     $book->save();
 
     return redirect(route('admin-books'));
   }
 
+
+
+  public function changePasswordPage(){
+    $message = Session::get('message');
+    return view('admin.change_password', compact('message'));
+  }
+
+
+  public function changePassword(Request $request){
+    $this->validate($request, [
+      'old_password' => 'required|min:6',
+      'new_password' => 'required|min:6',
+      'new_password_repeat' => 'required|min:6',
+    ]);
+
+    $user = Auth::user();
+    $message = null;
+    if(Hash::check($request->old_password, $user->password)){
+      if($request->new_password === $request->new_password_repeat){
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+        $message = 'رمز شما با موفقیت تغییر یافت';
+      }
+    }
+
+    if($message === null){
+      $message = 'متاسفانه رمز شما تغییر نیافت.لطفا رمز قبلی و رمز جدید را با دقت وارد نمایید.';
+    }
+
+    return redirect(route('admin-change-password-page'))->with('message', $message);
+
+
+
+  }
 
 
 }

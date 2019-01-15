@@ -19,13 +19,11 @@
                             @if(auth()->user()->role !== 'admin')
 
                                 @if($book->stock > 0)
-                                    <form action="{{route('user-cart-add')}}" method="post" class="d-inline" onsubmit="return confirm('آیا می خواهید این کتاب به سبد خرید شما اضافه شود؟')">
-                                        @csrf
-                                        <input type="hidden" name="book_id" value="{{$book->id}}">
-                                        <button type="submit" class="btn btn-success mt-4 "> افزودن به سبد خرید <i
-                                                    class="fa fa-shopping-cart"></i>
+                                    <a href="{{route('user-cart-add', $book->id)}}">
+                                        <button type="submit" class="btn btn-success mt-4 "> افزودن به سبد خرید
+                                            <i class="fa fa-shopping-cart"></i>
                                         </button>
-                                    </form>
+                                    </a>
                                 @endif
                                 <a href="{{route('user-cart')}}" class="btn btn-outline-info mt-4 ">مشاهده سبد خرید</a>
 
@@ -33,7 +31,7 @@
                         @else
 
                             @if($book->stock > 0)
-                                <a href="{{route('login')}}">
+                                <a href="{{route('user-cart-add', $book->id)}}">
                                     <button type="submit" class="btn btn-success mt-4 "> افزودن به سبد خرید
                                         <i class="fa fa-shopping-cart"></i>
                                     </button>
@@ -47,6 +45,8 @@
                             <span class="alert alert-danger p-1 text-center alert-unavailable ">نا موجود!</span>
                         </div>
                         @endif
+
+
 
                         <div class="mt-5">
                             <h5>توضیحات</h5>

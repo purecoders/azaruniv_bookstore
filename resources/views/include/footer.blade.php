@@ -37,14 +37,15 @@
                 <h4>ارتباط با ما</h4>
 
                 <p><strong>آدرس : </strong>
-                    <br>تبریز
-                    ٣٥ کیلومتری جاده تبریز-مراغه
-                    دانشگاه شهید مدنی آذربایجان
-                    تالار وحدت
-                    انتشارات دانشگاه تبریز
+                    <br>
+                    تبریز
+                    ،٣٥ کیلومتری جاده تبریز-مراغه
+                    ،دانشگاه شهید مدنی آذربایجان
+                    ،تالار وحدت
+                    ،ساختمان شیشه ای، کتابخانه مرکزی
                     <br><br>
                     <strong>پشتیبانی : </strong>
-                    ٧٧٧٧٧٧٥-٠٤١
+                    31452457-041
                 </p>
                 <hr class="hidden-md hidden-lg">
             </div>
@@ -71,7 +72,7 @@
                 طراحی و توسعه
                 توسط
 
-                <a target="_blank" class="text-success hover-link ml-1" href="https://www.ezitech.ir/">EziTech </a>
+                <a target="_blank" class="text-success hover-link ml-1" href="https://www.ezitech.ir/" >EziTech </a>
                 <span class="mx-4 "></span>
             </p>
         </div>

@@ -33,13 +33,15 @@ class UserController extends Controller
     return view('user.cart', compact(['contents', 'sum', 'message']));
   }
 
-  public function cartAdd(Request $request){
-    $this->validate($request,[
-      'book_id' => 'required|numeric'
-    ]);
+  public function cartAdd($book_id){
 
     $user = Auth::user();
-    $book = Book::find($request->book_id);
+    $book = Book::find($book_id);
+
+    if($user->role === 'admin'){
+      return redirect(route('detail', $book->id));
+    }
+
     $cart = $user->cart;
 
     if($cart == null){
@@ -91,12 +93,16 @@ class UserController extends Controller
     if ($content->cart->user->id == Auth::user()->id   &&  $content->count > 1){
       $content->count -= 1;
       $content->save();
-      $message = 'تعداد محصول در سبد خرید کم شد.';
+      $message = 'تعداد محصول بروز شد.';
+      $result = ['status' => 1, 'count' => $content->count, 'message' => $message];
+      return json_encode($result);
     }else{
-      $message = null;
+      $message = '';
+      $result = ['status' => 0, 'count' => $content->count, 'message' => $message];
+      return json_encode($result);
     }
 
-    return redirect(route('user-cart'))->with('message', $message);
+//    return redirect(route('user-cart'))->with('message', $message);
   }
 
   public function cartPlus($content_id){
@@ -104,12 +110,16 @@ class UserController extends Controller
     if ($content->cart->user->id == Auth::user()->id   &&  $content->book->stock > $content->count){
       $content->count += 1;
       $content->save();
-      $message = 'تعداد محصول در سبد خرید اضافه شد.';
+      $message = 'تعداد محصول بروز شد.';
+      $result = ['status' => 1, 'count' => $content->count, 'message' => $message];
+      return json_encode($result);
     }else{
       $message = "بیشتر از $content->count عدد از این نوع محصول وجود ندارد.";
+      $result = ['status' => 0, 'count' => $content->count, 'message' => $message];
+      return json_encode($result);
     }
 
-    return redirect(route('user-cart'))->with('message', $message);
+//    return redirect(route('user-cart'))->with('message', $message);
   }
 
   public function orders(){
@@ -180,16 +190,12 @@ class UserController extends Controller
     $token = $request->token;
     $pay_res_code = $request->ResCode;
 
-
-    print_r($request);
-    exit;
-
     $order = BankOrder::find($order_id);
 
 
 
     if ($pay_res_code != 0){
-      $description = 'تراکنش به دلایلی ناموفق بود لطفا دوباره امتحان کنید';
+      $description = 'تراکنش نا موفق بود در صورت کسر مبلغ از حساب شما حداکثر پس از 72 ساعت مبلغ به حسابتان برمی گردد';
       return view('user.paymentFailed', compact('description'));
     }
 
@@ -214,7 +220,6 @@ class UserController extends Controller
 
 
     if($pay_res_code == 0 && $res_code == 0){
-
       //success
       $cart = $order->cart;
       $user = $cart->user;

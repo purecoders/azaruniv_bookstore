@@ -1,12 +1,9 @@
 <?php
 
 
-//test
-use Illuminate\Http\Request;
 
-Route::post('t1', function (Request $request){
- return $request->address;
-})->name('t1');
+
+
 
 
 Auth::routes();
@@ -34,6 +31,9 @@ Route::post('/admin-book-insert', 'AdminController@bookInsert')->name('admin-boo
 Route::get('/admin-book/{id}', 'AdminController@book')->name('admin-book');
 Route::post('/admin-book-edit', 'AdminController@bookEdit')->name('admin-book-edit');
 
+Route::get('/admin-change-password-page', 'AdminController@changePasswordPage')->name('admin-change-password-page');
+Route::post('/admin-change-password', 'AdminController@changePassword')->name('admin-change-password');
+
 
 
 
@@ -41,7 +41,7 @@ Route::post('/admin-book-edit', 'AdminController@bookEdit')->name('admin-book-ed
 
 //user routes
 Route::get('/user-cart', 'UserController@cart')->name('user-cart');
-Route::post('/user-cart-add', 'UserController@cartAdd')->name('user-cart-add');
+Route::get('/user-cart-add/{book_id}', 'UserController@cartAdd')->name('user-cart-add');
 Route::post('/user-cart-remove', 'UserController@cartRemove')->name('user-cart-remove');
 Route::get('/user-cart-minus/{content_id}', 'UserController@cartMinus')->name('user-cart-minus');
 Route::get('/user-cart-plus/{content_id}', 'UserController@cartPlus')->name('user-cart-plus');

@@ -23,6 +23,16 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label for="important" class="col-form-label col-sm-2 pt-0">انتخاب به عنوان مهم</label>
+                            <div class="col-sm-7">
+                                <input id="important" type="checkbox" @if($book->is_important == 1) checked @endif name="is_important" style="width: 15px;height: 15px"  />
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="row">
                             <legend class="col-form-label col-sm-2 pt-0">قیمت کتاب</legend>
@@ -32,6 +42,9 @@
 
                         </div>
                     </div>
+
+
+
 
                     <div class="form-group">
                         <div class="row">
