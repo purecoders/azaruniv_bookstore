@@ -12,6 +12,10 @@
                             <i class="fa fa-info mr-1"></i>
                             اطلاعات سایت
                         </a></li>
+                    <li class="nav-item"><a  id="adminCardNavPass"  class="nav-link text-white " href="{{route('admin-change-password')}}">
+                            <i class="fa fa-key mr-1"></i>
+                            تغییر رمز
+                        </a></li>
                     <li  class="nav-item "><a id="adminCardNavBooks"  class="nav-link text-white" href="{{route('admin-books')}}">
                             <i class="fa fa-books  mr-1"></i>
                             کتاب ها

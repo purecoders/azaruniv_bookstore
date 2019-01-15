@@ -5,8 +5,7 @@
  */
 
 require('./bootstrap');
-
-
+import  Swiper from 'swiper';
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -24,31 +23,87 @@ require('./bootstrap');
 // });
 
 $(document).ready(function () {
+    //page url
+    var pageUrl = window.location.href
+    if(pageUrl.includes('detail')){
+        setTimeout(startSwiper, 200);
+    }else{
+    //swiper for main carousel
+    var swiper = new Swiper('#carousel', {
+        loop: true,
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
 
-
-    $('.btn-number').click(function(e){
+    //swiper for most sale books
+    var mostSale = new Swiper('#mostSales', {
+        // autoplay: {
+        //     delay: 3000,
+        //     disableOnInteraction: false,
+        // },
+        slidesPerView: 4,
+        spaceBetween: 30,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+            },
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+            },
+            640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+            },
+            500: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+            }
+        }
+    });
+    //swiper for most sales detail page
+    }
+    $('.btn-number').click(function (e) {
         e.preventDefault();
 
         fieldName = $(this).attr('data-field');
-        type      = $(this).attr('data-type');
-        var input = $("input[name='"+fieldName+"']");
+        type = $(this).attr('data-type');
+        var input = $("input[name='" + fieldName + "']");
         var currentVal = parseInt(input.val());
         if (!isNaN(currentVal)) {
-            if(type == 'minus') {
+            if (type == 'minus') {
 
-                if(currentVal > input.attr('min')) {
+                if (currentVal > input.attr('min')) {
                     input.val(currentVal - 1).change();
                 }
-                if(parseInt(input.val()) == input.attr('min')) {
+                if (parseInt(input.val()) == input.attr('min')) {
                     $(this).attr('disabled', true);
                 }
 
-            } else if(type == 'plus') {
+            } else if (type == 'plus') {
 
-                if(currentVal < input.attr('max')) {
+                if (currentVal < input.attr('max')) {
                     input.val(currentVal + 1).change();
                 }
-                if(parseInt(input.val()) == input.attr('max')) {
+                if (parseInt(input.val()) == input.attr('max')) {
                     $(this).attr('disabled', true);
                 }
 
@@ -57,24 +112,24 @@ $(document).ready(function () {
             input.val(0);
         }
     });
-    $('.input-number').focusin(function(){
+    $('.input-number').focusin(function () {
         $(this).data('oldValue', $(this).val());
     });
-    $('.input-number').change(function() {
+    $('.input-number').change(function () {
 
-        minValue =  parseInt($(this).attr('min'));
-        maxValue =  parseInt($(this).attr('max'));
+        minValue = parseInt($(this).attr('min'));
+        maxValue = parseInt($(this).attr('max'));
         valueCurrent = parseInt($(this).val());
 
         name = $(this).attr('name');
-        if(valueCurrent >= minValue) {
-            $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+        if (valueCurrent >= minValue) {
+            $(".btn-number[data-type='minus'][data-field='" + name + "']").removeAttr('disabled')
         } else {
             alert('Sorry, the minimum value was reached');
             $(this).val($(this).data('oldValue'));
         }
-        if(valueCurrent <= maxValue) {
-            $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+        if (valueCurrent <= maxValue) {
+            $(".btn-number[data-type='plus'][data-field='" + name + "']").removeAttr('disabled')
         } else {
             alert('Sorry, the maximum value was reached');
             $(this).val($(this).data('oldValue'));
@@ -97,11 +152,11 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
-    if($('.server-response').hasClass('active')){
+    if ($('.server-response').hasClass('active')) {
         $('.server-response').addClass('sr-active')
     }
-    setTimeout(closeServerResponse,3000);
-    var pageUrl = window.location.href
+    setTimeout(closeServerResponse, 3000);
+
     if (pageUrl.includes('user-profile')) {
         try {
             $('#userCardNavProfile').addClass('nav-active')
@@ -141,31 +196,58 @@ $(document).ready(function () {
         } catch (err) {
 
         }
+    } else if (pageUrl.includes('admin-change-password')) {
+        try {
+            $('#adminCardNavPass').addClass('nav-active')
+        } catch (err) {
+
+        }
     }
 
 })
 function closeServerResponse() {
-    if($('.server-response').hasClass('active')){
+    if ($('.server-response').hasClass('active')) {
         $('.server-response').removeClass('sr-active');
         $('.server-response').removeClass('active')
     }
     // $('.server-response').addClass('d-none');
 }
-var swiper = new Swiper('#carousel', {
-    loop:true,
-    autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-    },
-    pagination: {
-        el: '.swiper-pagination',
-    },
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-});
-
+function startSwiper(){
+    var mostSaleSwiperDateil = new Swiper('#DetailSlides', {
+        // autoplay: {
+        //     delay: 3000,
+        //     disableOnInteraction: false,
+        // },
+        slidesPerView: 3,
+        spaceBetween: 30,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+            },
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+            },
+            640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+            },
+            500: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+            }
+        }
+    });
+}
 
 //scroll top
 
@@ -183,74 +265,4 @@ $(function () {
     })
 })
 
-//swiper for most sale books
 
-var mostSale = new Swiper('.most-sales', {
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-    slidesPerView: 4,
-    spaceBetween: 30,
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-    },
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    breakpoints: {
-        1024: {
-            slidesPerView: 3,
-            spaceBetween: 40,
-        },
-        768: {
-            slidesPerView: 2,
-            spaceBetween: 30,
-        },
-        640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-        },
-        500: {
-            slidesPerView: 1,
-            spaceBetween: 10,
-        }
-    }
-});
-
-var mostSaleSwiperDateil = new Swiper('.most-sales-page-detail', {
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-    slidesPerView: 3,
-    spaceBetween: 30,
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-    },
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    breakpoints: {
-        1024: {
-            slidesPerView: 3,
-            spaceBetween: 40,
-        },
-        768: {
-            slidesPerView: 2,
-            spaceBetween: 30,
-        },
-        640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-        },
-        500: {
-            slidesPerView: 1,
-            spaceBetween: 10,
-        }
-    }
-});

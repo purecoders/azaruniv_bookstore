@@ -35,12 +35,12 @@
                 <p><strong>آدرس : </strong>
                     <br>تبریز
                     ٣٥ کیلومتری جاده تبریز-مراغه
-                    دانشگاه شهید مدنی آذربایجان
-                    تالار وحدت
+                    ،دانشگاه شهید مدنی آذربایجان
+                    ،ساختمان شیشه ای، کتابخانه مرکزی
                     انتشارات دانشگاه تبریز
                     <br><br>
                     <strong>پشتیبانی : </strong>
-                    ٧٧٧٧٧٧٥-٠٤١
+                    31452457-041
                 </p>
                 <hr class="hidden-md hidden-lg">
             </div>
@@ -62,7 +62,13 @@
             </p>
         </div>
         <div class="col-md-6">
-            <p class="pull-left">طراحی و اجرا: شرکت سبلان پایدار محتشم - سال ١٣٩٧</p>
+            <p class="wow fadeInRight" data-wow-duration="1s" dir="rtl">
+                طراحی و توسعه
+                توسط
+
+                <a target="_blank" class="text-success hover-link ml-1" href="https://www.ezitech.ir/" >EziTech </a>
+                <span class="mx-4 "></span>
+            </p>
 
         </div>
 

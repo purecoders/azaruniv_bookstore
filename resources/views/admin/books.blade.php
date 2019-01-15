@@ -23,6 +23,14 @@
                     </div>
                     <div class="form-group">
                         <div class="row">
+                            <label for="important" class="col-form-label col-sm-2 pt-0">انتخاب به عنوان مهم</label>
+                            <div class="col-sm-7">
+                                <input id="important" type="checkbox" name="" style="width: 15px;height: 15px"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
                             <legend class="col-form-label col-sm-2 pt-0">قیمت کتاب</legend>
                             <div class="col-sm-7">
                                 <input class="form-control d-inline" placeholder="قیمت کتاب را به تومان وارد کنید" type="number" name="" required/>

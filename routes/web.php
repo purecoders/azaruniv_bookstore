@@ -58,6 +58,11 @@ Route::get('/admin-site', function () {
   return view('admin.site');
 })->name('admin-site');
 
+Route::get('/admin-change-password', function () {
+  return view('admin.change_password');
+})->name('admin-change-password');
+
+
 
 
 

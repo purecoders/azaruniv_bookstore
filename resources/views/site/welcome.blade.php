@@ -5,9 +5,9 @@
         <div class="slide-container m-auto">
             <div id="carousel" class="swiper-container carousel" dir="rtl">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img class="w-100" src="{{asset('/img/slide5.jpg')}}"/></div>
-                    <div class="swiper-slide"><img class="w-100" src="{{asset('/img/slide6.jpg')}}"/></div>
-                    <div class="swiper-slide"><img class="w-100" src="{{asset('/img/slide3.jpg')}}"/></div>
+                    <div class="swiper-slide"><img class="w-100" src="{{asset('/img/cover.jpg')}}"/></div>
+                    <div class="swiper-slide"><img class="w-100" src="{{asset('/img/cover.jpg')}}"/></div>
+                    <div class="swiper-slide"><img class="w-100" src="{{asset('/img/cover.jpg')}}"/></div>
                 </div>
                 <!-- Add Pagination -->
                 <div class="swiper-pagination"></div>
