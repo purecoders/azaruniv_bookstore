@@ -94,6 +94,8 @@ class UserController extends Controller
       $content->count -= 1;
       $content->save();
 
+      $count1 = $content->count;
+
       $cart = Auth::user()->cart;
       $contents = $cart->contents;
       $sum = 0;
@@ -102,7 +104,7 @@ class UserController extends Controller
       }
 
       $message = 'تعداد محصول بروز شد.';
-      $result = ['status' => 1, 'count' => $content->count, 'message' => $message, 'sum' => $sum];
+      $result = ['status' => 1, 'count' => $count1, 'message' => $message, 'sum' => $sum];
       return json_encode($result);
     }else{
       $cart = Auth::user()->cart;
@@ -126,6 +128,8 @@ class UserController extends Controller
       $content->count += 1;
       $content->save();
 
+      $count1 = $content->count;
+
       $cart = Auth::user()->cart;
       $contents = $cart->contents;
       $sum = 0;
@@ -134,7 +138,7 @@ class UserController extends Controller
       }
 
       $message = 'تعداد محصول بروز شد.';
-      $result = ['status' => 1, 'count' => $content->count, 'message' => $message, 'sum' => $sum];
+      $result = ['status' => 1, 'count' => $count1, 'message' => $message, 'sum' => $sum];
       return json_encode($result);
     }else{
       $cart = Auth::user()->cart;
