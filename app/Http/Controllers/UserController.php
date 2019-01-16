@@ -93,12 +93,27 @@ class UserController extends Controller
     if ($content->cart->user->id == Auth::user()->id   &&  $content->count > 1){
       $content->count -= 1;
       $content->save();
+
+      $cart = Auth::user()->cart;
+      $contents = $cart->contents;
+      $sum = 0;
+      foreach ($contents as $content) {
+        $sum += ($content->count) * ($content->book->price);
+      }
+
       $message = 'تعداد محصول بروز شد.';
-      $result = ['status' => 1, 'count' => $content->count, 'message' => $message];
+      $result = ['status' => 1, 'count' => $content->count, 'message' => $message, 'sum' => $sum];
       return json_encode($result);
     }else{
+      $cart = Auth::user()->cart;
+      $contents = $cart->contents;
+      $sum = 0;
+      foreach ($contents as $content) {
+        $sum += ($content->count) * ($content->book->price);
+      }
+
       $message = '';
-      $result = ['status' => 0, 'count' => $content->count, 'message' => $message];
+      $result = ['status' => 0, 'count' => $content->count, 'message' => $message, 'sum' => $sum];
       return json_encode($result);
     }
 
@@ -110,12 +125,27 @@ class UserController extends Controller
     if ($content->cart->user->id == Auth::user()->id   &&  $content->book->stock > $content->count){
       $content->count += 1;
       $content->save();
+
+      $cart = Auth::user()->cart;
+      $contents = $cart->contents;
+      $sum = 0;
+      foreach ($contents as $content) {
+        $sum += ($content->count) * ($content->book->price);
+      }
+
       $message = 'تعداد محصول بروز شد.';
-      $result = ['status' => 1, 'count' => $content->count, 'message' => $message];
+      $result = ['status' => 1, 'count' => $content->count, 'message' => $message, 'sum' => $sum];
       return json_encode($result);
     }else{
+      $cart = Auth::user()->cart;
+      $contents = $cart->contents;
+      $sum = 0;
+      foreach ($contents as $content) {
+        $sum += ($content->count) * ($content->book->price);
+      }
+
       $message = "بیشتر از $content->count عدد از این نوع محصول وجود ندارد.";
-      $result = ['status' => 0, 'count' => $content->count, 'message' => $message];
+      $result = ['status' => 0, 'count' => $content->count, 'message' => $message, 'sum' => $sum];
       return json_encode($result);
     }
 

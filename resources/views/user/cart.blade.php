@@ -107,7 +107,7 @@
                                 <div class="form-group row">
                                     <label for="address" class="col-sm-2 col-form-label">مجموع مبلغ پرداختی: </label>
                                     <div class="col-sm-8 align-content-center pt-1">
-                                        <span class="text-dark" style="font-size: 1.1em">{{number_format($sum)}} تومان</span>
+                                        <span id="sum" class="text-dark" style="font-size: 1.1em">{{number_format($sum)}} تومان</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -157,6 +157,7 @@
                 msgBox.classList.remove("sr-active");
               },3000);
               document.getElementById("cart"+id).value = res.count;
+              document.getElementById("sum").innerHTML = numberFormat(res.sum) + " تومان ";
             }else if(this.responseText.status==0){
 
             }
@@ -185,11 +186,21 @@
                 msgBox.classList.remove("sr-active");
               },3000);
               document.getElementById("cart"+id).value = res.count;
+              document.getElementById("sum").innerHTML = numberFormat(res.sum) + " تومان ";
             }else if(this.responseText.status==0){
 
             }
           };
 
         }
+
+
+        function numberFormat(value) {
+          const formatter = new Intl.NumberFormat()
+
+          return formatter.format(value);
+        }
+
+
     </script>
 @endsection
