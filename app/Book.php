@@ -10,6 +10,6 @@ class Book extends Model
     use SoftDeletes;
 
     protected $fillable = [
-      'name', 'author', 'description', 'publisher', 'publication_date', 'price', 'stock', 'image_path', 'is_important'
+      'name', 'author', 'description', 'publisher', 'publication_date', 'price', 'stock', 'image_path', 'is_important', 'page_count'
     ];
 }

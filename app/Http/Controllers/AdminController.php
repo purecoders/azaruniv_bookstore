@@ -93,6 +93,7 @@ class AdminController extends Controller
       'publisher' => 'required|min:2|max:200|string',
       'publication_date' => 'required|min:2|max:200|string',
       'price' => 'required|min:0|max:20000000|numeric',
+      'page_count' => 'required|min:0|max:200000|numeric',
       'stock' => 'required|min:0|max:200000|numeric',
       'image' => 'required|image',
     ]);
@@ -116,6 +117,7 @@ class AdminController extends Controller
       'publisher' => $request->publisher,
       'publication_date' => $request->publication_date,
       'price' => $request->price,
+      'page_count' => $request->page_count,
       'stock' => $request->stock,
       'image_path' => $file_path,
       'is_important' => $is_important,
@@ -141,6 +143,7 @@ class AdminController extends Controller
       'publisher' => 'required|min:2|max:200|string',
       'publication_date' => 'required|min:2|max:200|string',
       'price' => 'required|min:0|max:20000000|numeric',
+      'page_count' => 'required|min:0|max:200000|numeric',
       'stock' => 'required|min:0|max:200000|numeric',
       'image' => 'image',
     ]);
@@ -170,6 +173,7 @@ class AdminController extends Controller
     $book->publisher = $request->publisher;
     $book->publication_date = $request->publication_date;
     $book->price = $request->price;
+    $book->page_count = $request->page_count;
     $book->stock = $request->stock;
     $book->image_path = $file_path;
     $book->is_important = $is_important;

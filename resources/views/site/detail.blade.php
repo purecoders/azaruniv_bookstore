@@ -5,7 +5,7 @@
             <div class="shadow-box p-3">
                 <div class="row">
                     <div class="col-md-4 img-container">
-                        <img src="{{asset('img/book1.jpg')}}" alt="">
+                        <img src="{{asset($book->image_path)}}" alt="">
                     </div>
                     <div class="col-md-8 mt-2 mt-md-0">
                         <h4>{{$book->name}}</h4>
@@ -53,6 +53,7 @@
                             <h6 class="mt-3">نویسنده: <strong>{{$book->author}}</strong></h6>
                             <h6 class="mt-2">ناشر: <strong>{{$book->publisher}}</strong></h6>
                             <h6 class="mt-2">تاریخ و نوبت نشر: <strong>{{$book->publication_date}}</strong></h6>
+                            <h6 class="mt-2">تعداد صفحات: <strong>{{$book->page_count}}</strong></h6>
                             <h6 class="mt-3">شرح کتاب:</h6>
                             <p class="mt-1">
                                 {{$book->description}}

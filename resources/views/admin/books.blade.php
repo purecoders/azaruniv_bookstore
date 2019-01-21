@@ -64,6 +64,16 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <legend class="col-form-label col-sm-2 pt-0">تعداد صفحات</legend>
+                            <div class="col-sm-7">
+                                <input class="form-control d-inline" placeholder="تعداد صفحات کتاب" type="number" name="page_count" required/>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="row">
                             <legend class="col-form-label col-sm-2 pt-0">تعداد</legend>
