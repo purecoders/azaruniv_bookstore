@@ -14,6 +14,7 @@
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 <link href="{{ asset('css/all.css') }}" rel="stylesheet">
+<link rel="shortcut icon" type="image/png" href="{{asset('favicon.png')}}"/>
 
 <!-- Scripts -->
 <script src="{{ asset('js/bundle.js') }}" defer></script>
