@@ -88,7 +88,7 @@
                         <div class="col-sm-10">
                             <textarea name="description" class="form-control rtl "
                                       placeholder="توضیحات کتاب را وارد کنید"
-                                      rows="5"></textarea>
+                                      rows="5" required></textarea>
                         </div>
                     </div>
                     <div class="form-group row">

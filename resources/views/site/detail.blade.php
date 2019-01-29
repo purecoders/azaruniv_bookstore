@@ -75,7 +75,7 @@
                                 <div class="d-flex flex-column ">
                                     <span class="mb-1">{{$book->name}}</span>
                                     <span class="mb-2">{{$book->author}}</span>
-                                    <span class="book-price">{{$book->price}} تومان</span>
+                                    <span class="book-price">{{number_format($book->price)}} تومان</span>
                                 </div>
                             </div>
                         </a>

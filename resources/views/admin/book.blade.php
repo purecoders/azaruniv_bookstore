@@ -93,7 +93,7 @@
                         <div class="col-sm-10">
                             <textarea name="description"  class="form-control rtl "
                                       placeholder="توضیحات کتاب را وارد کنید"
-                                      rows="5">{{$book->description}}</textarea>
+                                      rows="5" required>{{$book->description}}</textarea>
                         </div>
                     </div>
                     <input type="hidden" name="book_id" value="{{$book->id}}">
