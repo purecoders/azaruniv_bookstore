@@ -25,39 +25,39 @@
                                 </h6>
 
 
-                                    <div class="d-flex align-items-center">
-                                        <span class="mr-1">تعداد</span>
+                                <div class="d-flex align-items-center">
+                                    <span class="mr-1">تعداد</span>
 
 
-                             <div class="input-group">
+                                    <div class="input-group">
 
-                                 <a class="input-group-btn mr-1" onclick="minusFromCart(event,{{$content->id}})" href="#">
-                                    <button type="button" class="btn btn-default "
-                                            {{--disabled="disabled"--}}
-                                            {{--data-type="minus"--}}
-                                            {{--data-field="quant[{{$content->id}}]"--}}
-                                    >
-                                        <span class="fa fa-minus"></span>
-                                    </button>
-                                 </a>
-
-
-                                            <input id="cart{{$content->id}}" type="text" name="quant[{{$content->id}}]" class="form-control input-number mr-1" value="{{$content->count}}"
-                                                   min="1"
-                                                   max="1000">
+                                        <a class="input-group-btn mr-1" onclick="minusFromCart(event,{{$content->id}})" href="#">
+                                            <button type="button" class="btn btn-default "
+                                                    {{--disabled="disabled"--}}
+                                                    {{--data-type="minus"--}}
+                                                    {{--data-field="quant[{{$content->id}}]"--}}
+                                            >
+                                                <span class="fa fa-minus"></span>
+                                            </button>
+                                        </a>
 
 
-                                  <a class="input-group-btn" onclick="addToCart(event,{{$content->id}})" href="#">
-                                    <button type="button" class="btn btn-default "
-                                            {{--data-type="plus"--}}
-                                            {{--data-field="quant[{{$content->id}}]"--}}
-                                    >
-                                        <span class="fa fa-plus"></span>
-                                    </button>
-                                </a>
-                             </div>
+                                        <input id="cart{{$content->id}}" type="text" name="quant[{{$content->id}}]" class="form-control input-number mr-1" value="{{$content->count}}"
+                                               min="1"
+                                               max="1000">
 
+
+                                        <a class="input-group-btn" onclick="addToCart(event,{{$content->id}})" href="#">
+                                            <button type="button" class="btn btn-default "
+                                                    {{--data-type="plus"--}}
+                                                    {{--data-field="quant[{{$content->id}}]"--}}
+                                            >
+                                                <span class="fa fa-plus"></span>
+                                            </button>
+                                        </a>
                                     </div>
+
+                                </div>
 
 
                                 <form action="{{route('user-cart-remove')}}" method="post" class="d-inline" onsubmit="">
@@ -86,23 +86,31 @@
                                 <div class="form-group row">
                                     <label for="address" class="col-sm-2 col-form-label">آدرس: </label>
                                     <div class="col-sm-8">
-                                    <textarea name="address" type="text" class="form-control" rows="5" id="address"
-                                              placeholder="آدرس دقیق خود را وارد کنید" required></textarea>
+                                    <textarea  name="address" type="text" class="form-control" rows="5" id="address"
+                                               placeholder="آدرس دقیق خود را وارد کنید" ></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="address" class="col-sm-2 col-form-label">شماره تلفن همراه: </label>
                                     <div class="col-sm-8">
                                         <input name="phone" type="number" class="form-control" rows="5" id="address"
-                                               placeholder="مثال: 09140000000" required>
+                                               placeholder="مثال: 09000000000" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="address" class="col-sm-2 col-form-label">کد پستی:</label>
                                     <div class="col-sm-8">
-                                        <input name="postal_code" type="number" class="form-control" rows="5" id="address"
-                                               placeholder="مثال: 00000-11111" required>
+                                        <input id="postalCode" name="postal_code" type="number" class="form-control" rows="5" id="address"
+                                               placeholder="مثال: 00000-11111" >
                                     </div>
+                                </div>
+                                <div class="form-group row align-content-center">
+                                    <label for="address" class="col-sm-2 col-form-label">تحویل حضوری:</label>
+                                    <div class="col-sm-8">
+
+                                        <input  onclick="checkInperson(this)" name="is_in_person" class="m-auto" style="height:40px;width: 20px" type="checkbox" >
+                                    </div>
+                                    <span class="alert alert-warning">در صورت انتخاب گزینه تحویل حضوری، کتاب/کتابها با پست ارسال نخواهد شد و برای دریافت آن می بایست با در دست داشتن کد خرید به کتابخانه مرکزی دانشگاه مراجعه نمایید!</span>
                                 </div>
                                 <div class="form-group row">
                                     <label for="address" class="col-sm-2 col-form-label">مجموع مبلغ پرداختی: </label>
@@ -136,71 +144,70 @@
 
     </section>
     <script>
-        function addToCart(elm,id) {
-          elm.preventDefault();
-          var url = "http://" + window.location.hostname + "/user-cart-plus/" + id ;
-          var xhttp = new XMLHttpRequest();
-          xhttp.open('GET',url,true);
-          xhttp.send();
-          xhttp.onreadystatechange = function() {
-            var res;
-            try{
-              res =JSON.parse(this.responseText)
-            } catch(e) {
-
-            }
-            if (this.readyState == 4 && this.status == 200 && res.status==1) {
-              var msgBox = document.getElementById("srMsg");
-              msgBox.innerHTML = res.message;
-              msgBox.classList.add("sr-active");
-              setTimeout(function () {
-                msgBox.classList.remove("sr-active");
-              },3000);
-              document.getElementById("cart"+id).value = res.count;
-              document.getElementById("sum").innerHTML = numberFormat(res.sum) + " تومان ";
-            }else if(this.responseText.status==0){
-
-            }
-          };
+      function addToCart(elm,id) {
+        elm.preventDefault();
+        var url = "http://" + window.location.hostname + "/user-cart-plus/" + id ;
+        var xhttp = new XMLHttpRequest();
+        xhttp.open('GET',url,true);
+        xhttp.send();
+        xhttp.onreadystatechange = function() {
+          var res;
+          try{
+            res =JSON.parse(this.responseText)
+          } catch(e) {
+          }
+          if (this.readyState == 4 && this.status == 200 && res.status==1) {
+            var msgBox = document.getElementById("srMsg");
+            msgBox.innerHTML = res.message;
+            msgBox.classList.add("sr-active");
+            setTimeout(function () {
+              msgBox.classList.remove("sr-active");
+            },3000);
+            document.getElementById("cart"+id).value = res.count;
+            document.getElementById("sum").innerHTML = numberFormat(res.sum) + " تومان ";
+          }else if(this.responseText.status==0){
+          }
+        };
+      }
+      function minusFromCart (elm,id) {
+        elm.preventDefault();
+        var url = "http://" + window.location.hostname + "/user-cart-minus/" + id ;
+        var xhttp = new XMLHttpRequest();
+        xhttp.open('GET',url,true);
+        xhttp.send();
+        xhttp.onreadystatechange = function() {
+          var res;
+          try{
+            res =JSON.parse(this.responseText)
+          } catch(e) {
+          }
+          if (this.readyState == 4 && this.status == 200 && res.status==1) {
+            var msgBox = document.getElementById("srMsg");
+            msgBox.innerHTML = res.message;
+            msgBox.classList.add("sr-active");
+            setTimeout(function () {
+              msgBox.classList.remove("sr-active");
+            },3000);
+            document.getElementById("cart"+id).value = res.count;
+            document.getElementById("sum").innerHTML = numberFormat(res.sum) + " تومان ";
+          }else if(this.responseText.status==0){
+          }
+        };
+      }
+      function numberFormat(value) {
+        var formatter = new Intl.NumberFormat()
+        return formatter.format(value);
+      }
+      function checkInperson(elm) {
+        var addressInput = document.getElementById('address');
+        var postalCodeInput = document.getElementById('postalCode');
+        if(elm.checked){
+          addressInput.disabled=true;
+          postalCodeInput.disabled=true;
+        }else{
+          addressInput.disabled=false;
+          postalCodeInput.disabled=false;
         }
-        function minusFromCart (elm,id) {
-
-          elm.preventDefault();
-          var url = "http://" + window.location.hostname + "/user-cart-minus/" + id ;
-          var xhttp = new XMLHttpRequest();
-          xhttp.open('GET',url,true);
-          xhttp.send();
-          xhttp.onreadystatechange = function() {
-            var res;
-            try{
-              res =JSON.parse(this.responseText)
-            } catch(e) {
-
-            }
-            if (this.readyState == 4 && this.status == 200 && res.status==1) {
-
-              var msgBox = document.getElementById("srMsg");
-              msgBox.innerHTML = res.message;
-              msgBox.classList.add("sr-active");
-              setTimeout(function () {
-                msgBox.classList.remove("sr-active");
-              },3000);
-              document.getElementById("cart"+id).value = res.count;
-              document.getElementById("sum").innerHTML = numberFormat(res.sum) + " تومان ";
-            }else if(this.responseText.status==0){
-
-            }
-          };
-
-        }
-
-
-        function numberFormat(value) {
-          const formatter = new Intl.NumberFormat()
-
-          return formatter.format(value);
-        }
-
-
+      }
     </script>
 @endsection

@@ -9,7 +9,7 @@ class BankOrder extends Model
 {
   use SoftDeletes;
 
-  protected $fillable = ['cart_id', 'address', 'phone', 'postal_code', 'amount'];
+  protected $fillable = ['cart_id', 'is_in_person','address', 'phone', 'postal_code', 'amount'];
 
 
   public function cart(){

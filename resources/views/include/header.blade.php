@@ -22,11 +22,11 @@
         @endphp
         <div class=" col-4 text-left d-none flex-row justify-content-end	align-items-end p-2 align-self-end d-md-flex ">
             @auth
-               @if(auth()->user()->role == 'user')
-                <a href="{{route('user-cart')}}" class="btn btn-green m-1"> سبد خرید {{$count}} <i
-                            class="fa fa-shopping-basket"></i>
-                </a>
-               @endif
+                @if(auth()->user()->role == 'user')
+                    <a href="{{route('user-cart')}}" class="btn btn-green m-1"> سبد خرید {{$count}} <i
+                                class="fa fa-shopping-basket"></i>
+                    </a>
+                @endif
             @endauth
         </div>
 
@@ -39,9 +39,9 @@
         <div class="col-4 text-left d-flex flex-row justify-content-end	align-items-end p-2 align-self-end">
             @auth
                 @if(auth()->user()->role == 'user')
-                <a href="{{route('user-cart')}}" class="btn btn-light m-1"> سبد خرید {{$count}} <i
-                            class="fa fa-shopping-basket"></i>
-                </a>
+                    <a href="{{route('user-cart')}}" class="btn btn-light m-1"> سبد خرید {{$count}} <i
+                                class="fa fa-shopping-basket"></i>
+                    </a>
                 @endif
             @endauth
         </div>
@@ -61,10 +61,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="http://www.azaruniv.ac.ir/?PageID=6" target="_blank">تماس با ما</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://www.azaruniv.ac.ir/?PageID=6" target="_blank">درباره ما</a>
+                    <a class="nav-link" href="#contactUs" >ارتباط با ما</a>
                 </li>
                 @guest
                     <li class="nav-item">
@@ -73,9 +70,9 @@
                 @endguest
                 @auth
                     @if(auth()->user()->role == 'user')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('user-cart')}}">سبد خرید</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('user-cart')}}">سبد خرید</a>
+                        </li>
                     @endif
                 @endauth
             </ul>

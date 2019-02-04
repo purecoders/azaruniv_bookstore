@@ -35,6 +35,21 @@
 
                     <div class="form-group">
                         <div class="row">
+                            <label for="category" class="col-form-label col-sm-2 pt-0">دسته بندی</label>
+
+                            <div class="col-sm-7">
+                                <select class="form-control" name="category_id" id="category">
+                                    <option value="0"></option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}" @if($book->category_id == $category->id) selected @endif>{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
                             <legend class="col-form-label col-sm-2 pt-0">قیمت کتاب</legend>
                             <div class="col-sm-7">
                                 <input class="form-control d-inline" placeholder="قیمت کتاب را به تومان وارد کنید" type="number" value="{{$book->price}}" name="price" required/>
@@ -99,9 +114,16 @@
                     <input type="hidden" name="book_id" value="{{$book->id}}">
                     <div class="form-group row">
                         <div class="col-sm-10">
-                            <button type="submit" class="btn btn-blue">ویرایش</button>
+                            <button type="submit" class="btn btn-blue">ثبت تغییرات</button>
+
                         </div>
                     </div>
+                </form>
+
+                <form class="text-center" action="{{route('admin-book-remove')}}" method="post" onsubmit="return confirm('آیا از حذف کتاب مطمئن هستید؟')">
+                    <input type="hidden" name="book_id" value="{{$book->id}}">
+                    <input type="submit" class="btn btn btn-danger" value="حذف این کتاب">
+                    @csrf
                 </form>
 
             </div>

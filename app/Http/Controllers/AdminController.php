@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\Category;
 use App\Order;
 use App\Slider;
 use Illuminate\Http\Request;
@@ -81,12 +82,14 @@ class AdminController extends Controller
 
   public function books(){
     $books = Book::orderBy('id', 'desc')->paginate(10);
-    return view('admin.books', compact('books'));
+    $categories = Category::all();
+    return view('admin.books', compact(['books', 'categories']));
   }
 
 
   public function bookInsert(Request $request){
     $this->validate($request, [
+      'category_id' => 'numeric',
       'name' => 'required|min:2|max:200|string',
       'author' => 'required|min:2|max:200|string',
       'description' => 'required|min:2|max:6000|string',
@@ -111,6 +114,7 @@ class AdminController extends Controller
     $image->move($dir, $image_name);
 
     $book = Book::create([
+      'category_id' => $request->category_id,
       'name' => $request->name,
       'author' => $request->author,
       'description' => $request->description,
@@ -129,14 +133,16 @@ class AdminController extends Controller
 
   public function book($id){
     $book = Book::find($id);
+    $categories = Category::all();
 
-    return view('admin.book', compact('book'));
+    return view('admin.book', compact(['book', 'categories']));
   }
 
 
   public function bookEdit(Request $request){
     $this->validate($request, [
       'book_id' => 'required|numeric',
+      'category_id' => 'numeric',
       'name' => 'required|min:2|max:200|string',
       'author' => 'required|min:2|max:200|string',
       'description' => 'required|min:2|max:6000|string',
@@ -167,6 +173,7 @@ class AdminController extends Controller
     }
 
 
+    $book->category_id = $request->category_id;
     $book->name = $request->name;
     $book->author = $request->author;
     $book->description = $request->description;
@@ -182,6 +189,16 @@ class AdminController extends Controller
     return redirect(route('admin-books'));
   }
 
+
+  public function bookRemove(Request $request){
+    $this->validate($request, [
+      'book_id' => 'required|numeric',
+    ]);
+
+    $book = Book::find($request->book_id);
+    $book->delete();
+    return redirect(route('admin-books'));
+  }
 
 
   public function changePasswordPage(){

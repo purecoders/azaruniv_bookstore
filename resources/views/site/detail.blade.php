@@ -41,9 +41,9 @@
 
                         @endif
                         @if($book->stock < 1)
-                        <div class="mt-4">
-                            <span class="alert alert-danger p-1 text-center alert-unavailable ">نا موجود!</span>
-                        </div>
+                            <div class="mt-4">
+                                <span class="alert alert-danger p-1 text-center alert-unavailable ">نا موجود!</span>
+                            </div>
                         @endif
 
 
@@ -63,34 +63,7 @@
                 </div>
 
             </div>
-            <div class="detail-container mt-4 p-3">
-                <h4 class="mt-3 mb-3">کتاب های پر فروش</h4>
-                <div id="DetailSlides"  class="swiper-container" dir="rtl">
-                    <div class="swiper-wrapper text-center">
 
-                        @foreach($best_sellers as $book)
-                        <a href="{{route('detail', $book->id)}}"  class="swiper-slide d-block text-center book-link">
-                            <div class=" text-center d-felx flex-column m-3">
-                                <img src="{{asset($book->image_path)}}" class="book-img"/>
-                                <div class="d-flex flex-column ">
-                                    <span class="mb-1">{{$book->name}}</span>
-                                    <span class="mb-2">{{$book->author}}</span>
-                                    <span class="book-price">{{number_format($book->price)}} تومان</span>
-                                </div>
-                            </div>
-                        </a>
-                        @endforeach
-
-
-
-                    </div>
-                    <!-- Add Pagination -->
-                    <div class="swiper-pagination"></div>
-                    <!-- Add Arrows -->
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                </div>
-            </div>
         </div>
 
         @if($message)

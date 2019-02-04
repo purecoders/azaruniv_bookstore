@@ -12,4 +12,9 @@ class Book extends Model
     protected $fillable = [
       'category_id', 'name', 'author', 'description', 'publisher', 'publication_date', 'price', 'stock', 'image_path', 'is_important', 'page_count'
     ];
+
+
+    public function category(){
+      return $this->belongsTo('App\Category');
+    }
 }

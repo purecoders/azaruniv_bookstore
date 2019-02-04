@@ -14,6 +14,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //site routes
 Route::get('/', 'SiteController@index')->name('site-home');
 Route::get('/detail/{id}', 'SiteController@bookDetail')->name('detail');
+Route::get('/category/{id}/books', 'SiteController@categoryBooks')->name('category-books');
 
 
 
@@ -30,6 +31,7 @@ Route::get('/admin-books', 'AdminController@books')->name('admin-books');
 Route::post('/admin-book-insert', 'AdminController@bookInsert')->name('admin-book-insert');
 Route::get('/admin-book/{id}', 'AdminController@book')->name('admin-book');
 Route::post('/admin-book-edit', 'AdminController@bookEdit')->name('admin-book-edit');
+Route::post('/admin-book-remove', 'AdminController@bookRemove')->name('admin-book-remove');
 
 Route::get('/admin-change-password-page', 'AdminController@changePasswordPage')->name('admin-change-password-page');
 Route::post('/admin-change-password', 'AdminController@changePassword')->name('admin-change-password');
@@ -63,6 +65,15 @@ Route::post('/user-cart-pay-verify', 'UserController@cartPayVerify')->name('user
 
 
 
+
+Route::get('/test',function(){
+  $description = 'تراکنش لا موفقیت انجام شد';
+  $amount = 10000;
+  $retrival_ref_no = 12211;
+  $system_trace_no = 2311;
+  $buy_code = 25469845;
+  return view('user.paymentSuccess',compact(['description','amount','retrival_ref_no','system_trace_no', 'buy_code']));
+});
 
 
 

@@ -168,14 +168,17 @@ class UserController extends Controller
 
 
   public function cartPay(Request $request){
-    $this->validate($request, [
-      'address' => 'required|string|max:3000',
+     $this->validate($request, [
+//      'address' => 'string|max:3000',
       'phone' => 'required|string|max:20|min:5',
-      'postal_code' => 'required|string|max:20',
+//      'postal_code' => 'string|max:20',
     ]);
 
     $cart = Auth::user()->cart;
     $contents = $cart->contents;
+    $is_in_person = 0;
+    if(!is_null($request->is_in_person)) $is_in_person = 1;
+
     $amount = 0;
     foreach ($contents as $content) {
       $amount += ($content->count) * ($content->book->price);
@@ -189,10 +192,13 @@ class UserController extends Controller
       }
     }
 
+    $address = 'تحویل حضوری';
+    if($is_in_person == 0) $address = $request->address;
 
     $order = BankOrder::create([
       'cart_id' => $cart->id,
-      'address' => $request->address,
+      'is_in_person' => $is_in_person,
+      'address' => $address,
       'phone' => $request->phone,
       'postal_code' => $request->postal_code,
       'amount' => (int) $amount,
@@ -268,9 +274,14 @@ class UserController extends Controller
         'system_trace_no' => $system_trace_no,
       ]);
 
+      //generate buy_code
+      $buy_code = $order->id . ((int) ($system_trace_no/2));
+
       $new_order = Order::create([
         'user_id' => $user->id,
         'payment_id' => $payment->id,
+        'is_in_person' => $order->is_in_person,
+        'buy_code' => $buy_code,
         'address' => $order->address,
         'phone' => $order->phone,
         'postal_code' => $order->postal_code,
@@ -298,7 +309,7 @@ class UserController extends Controller
 
 
 
-      return view('user.paymentSuccess', compact(['description', 'retrival_ref_no', 'system_trace_no', 'amount']));
+      return view('user.paymentSuccess', compact(['description', 'retrival_ref_no', 'system_trace_no', 'amount', 'buy_code']));
 
     }else{
       //failed

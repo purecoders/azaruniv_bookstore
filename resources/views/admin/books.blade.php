@@ -30,6 +30,22 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label for="category" class="col-form-label col-sm-2 pt-0">دسته بندی</label>
+
+                            <div class="col-sm-7">
+                                <select class="form-control" name="category_id" id="category">
+                                    <option value="0"></option>
+                                    @foreach($categories as $category)
+                                    <option value="{{$category->id}}" >{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="row">
                             <legend class="col-form-label col-sm-2 pt-0">قیمت کتاب</legend>
@@ -39,7 +55,7 @@
 
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="row">
                             <legend class="col-form-label col-sm-2 pt-0">نویسنده کتاب</legend>
@@ -82,7 +98,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <div class="col-sm-2">توضیحات کتاب</div>
                         <div class="col-sm-10">
@@ -100,7 +116,7 @@
 
             </div>
             <div class="col-md-4">
-                
+
             </div>
         </div>
         <br>
@@ -111,39 +127,49 @@
         <div class="mt-1 d-flex flex-wrap">
 
             @foreach($books as $book)
-            <div class="m-1 admin-book-container d-flex flex-column">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="admin-book-img-container">
-                            <img src="{{asset($book->image_path)}}" alt="">
+                <div class="m-1 admin-book-container d-flex flex-column">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="admin-book-img-container">
+                                <img src="{{asset($book->image_path)}}" alt="">
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="d-flex justify-content-between align-items-center admin-book-card-header my-md-0">
+                                <h6>{{$book->name}}</h6>
+                                <span class="btn-sm course-price align-self-start ">{{number_format($book->price)}} تومان</span>
+                            </div>
+                            <p class="mt-2">
+                                {{$book->description}}
+                            </p>
                         </div>
                     </div>
-                    <div class="col-sm-8">
-                        <div class="d-flex justify-content-between align-items-center admin-book-card-header my-md-0">
-                            <h6>{{$book->name}}</h6>
-                            <span class="btn-sm course-price align-self-start ">{{number_format($book->price)}} تومان</span>
-                        </div>
-                        <p class="mt-2">
-                            {{$book->description}}
-                        </p>
+                    <div class="d-flex mt-3 justify-content-between align-items-center flex-wrap">
+                        <span><i class="fal fa-books"></i> {{$book->stock}}</span>
+                        <span><i class="fal fa-user"></i> {{$book->author}}</span>
+                        <a href="{{route('admin-book', $book->id)}}" class="btn btn-sm btn-blue"><i class="fal fa-cog mr-1 "></i>ویرایش کتاب</a>
                     </div>
                 </div>
-                <div class="d-flex mt-3 justify-content-between align-items-center flex-wrap">
-                    <span><i class="fal fa-books"></i> {{$book->stock}}</span>
-                    <span><i class="fal fa-user"></i> {{$book->author}}</span>
-                    <a href="{{route('admin-book', $book->id)}}" class="btn btn-sm btn-blue"><i class="fal fa-cog mr-1 "></i>ویرایش کتاب</a>
-                </div>
-            </div>
             @endforeach
 
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        {{$books->links()}}
-                    </ul>
-                </nav>
+
 
 
 
         </div>
+
+        <div class="container" >
+            <div class="d-flex justify-content-center">
+                <div class="flex-item text-center mt-2" style="">
+                    <nav aria-label="Page navigation example"  >
+                        <ul class="pagination" >
+                            {{$books->links()}}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 @endsection

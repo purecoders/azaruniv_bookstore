@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('payment_id')->unsigned();
             $table->foreign('payment_id')->references('id')->on('payments');
-            $table->text('address');
+            $table->text('address')->nullable();
             $table->boolean('is_sent');
             $table->timestamps();
             $table->softDeletes();
