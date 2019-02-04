@@ -66,14 +66,7 @@ Route::post('/user-cart-pay-verify', 'UserController@cartPayVerify')->name('user
 
 
 
-Route::get('/test',function(){
-  $description = 'تراکنش لا موفقیت انجام شد';
-  $amount = 10000;
-  $retrival_ref_no = 12211;
-  $system_trace_no = 2311;
-  $buy_code = 25469845;
-  return view('user.paymentSuccess',compact(['description','amount','retrival_ref_no','system_trace_no', 'buy_code']));
-});
+
 
 
 
