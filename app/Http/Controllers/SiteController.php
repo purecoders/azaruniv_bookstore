@@ -15,7 +15,7 @@ class SiteController extends Controller
 
   public function index(){
     $sliders = Slider::all();
-    $books = Book::orderBy('is_important', 'desc')->orderBy('id', 'desc')->paginate(24);
+    $books = Book::orderBy('is_important', 'desc')->orderBy('publication_date','desc')->orderBy('id', 'desc')->paginate(24);
 //    $best_seller_ids = DB::select("SELECT book_id,count(book_id) as total FROM `order_contents`  group by(book_id) order by total desc limit 10");
 //    $best_sellers = array();
 //    foreach ($best_seller_ids as $id) {
@@ -27,7 +27,7 @@ class SiteController extends Controller
 //    if(sizeof($best_sellers) < 1){
 //      $best_sellers = Book::orderBy('is_important', 'desc')->orderBy('id', 'desc')->take(10)->get();
 //    }
-    $categories = Category::all();
+    $categories = Category::orderby('id', 'desc')->get();
     return view('site.welcome', compact(['sliders', 'books', 'categories']));
   }
 
@@ -59,7 +59,7 @@ class SiteController extends Controller
     $category = Category::find($id);
     $books = $category->books()->paginate(24);
     $sliders = Slider::all();
-    $categories = Category::all();
+    $categories = Category::orderby('id', 'desc')->get();
 
     return view('site.welcome', compact(['sliders', 'books', 'categories']));
   }
