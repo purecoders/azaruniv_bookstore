@@ -57,7 +57,7 @@ class SiteController extends Controller
 
   public function categoryBooks($id){
     $category = Category::find($id);
-    $books = $category->books()->paginate(24);
+    $books = $category->books()->orderBy('is_important', 'desc')->orderBy('publication_date','desc')->orderBy('id', 'desc')->paginate(24);
     $sliders = Slider::all();
     $categories = Category::orderby('id', 'desc')->get();
 
