@@ -90,11 +90,11 @@ class AdminController extends Controller
   public function bookInsert(Request $request){
     $this->validate($request, [
       'category_id' => 'numeric',
-      'name' => 'required|min:2|max:200|string',
-      'author' => 'required|min:2|max:200|string',
-      'description' => 'required|min:2|max:6000|string',
-      'publisher' => 'required|min:2|max:200|string',
-      'publication_date' => 'required|min:2|max:200|string',
+      'name' => 'required|min:1|max:200|string',
+      'author' => 'required|min:1|max:200|string',
+      'description' => 'required|min:1|max:6000|string',
+      'publisher' => 'required|min:1|max:200|string',
+      'publication_date' => 'required|min:1|max:200|string',
       'price' => 'required|min:0|max:20000000|numeric',
       'page_count' => 'required|min:0|max:200000|numeric',
       'stock' => 'required|min:0|max:200000|numeric',
