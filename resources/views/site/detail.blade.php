@@ -57,7 +57,15 @@
                             <h6 class="mt-3">شرح کتاب:</h6>
                             <p class="mt-1">
                                 {{$book->description}}
+
                             </p>
+
+                            @if($book->demo_file !== null)
+                                <button type="button" class="btn btn-primary ">
+                                    <a class="text-white" style="text-decoration: none" href="{{Illuminate\Support\Facades\URL::to('/') .'/'.$book->demo_file}}" target="_blank">دانلود دمو </a>
+                                </button>
+
+                            @endif
                         </div>
                     </div>
                 </div>

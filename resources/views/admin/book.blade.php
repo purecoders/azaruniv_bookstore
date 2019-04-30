@@ -111,6 +111,20 @@
                                       rows="5" required>{{$book->description}}</textarea>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <legend class="col-form-label col-sm-2 pt-0">نسخه دمو(pdf)</legend>
+                            <div class="col-sm-7">
+                                <input type="file" name="demo_file" accept="application/pdf" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+
+
                     <input type="hidden" name="book_id" value="{{$book->id}}">
                     <div class="form-group row">
                         <div class="col-sm-10">

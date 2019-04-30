@@ -105,6 +105,7 @@ class AdminController extends Controller
     if($request->is_important !== null) $is_important = 1;
 
     $image = $request->file('image');
+    $demo = $request->file('demo_file');
 
     $file_extension = $image->getClientOriginalExtension();
     $dir = FileHelper::getFileDirName('images/books');
@@ -112,6 +113,17 @@ class AdminController extends Controller
     $image_name = $file_name . '.' . $file_extension;
     $file_path = $dir . '/' . $file_name . '.'.$file_extension;
     $image->move($dir, $image_name);
+
+
+    $file_path2 = null;
+    if($demo !== null) {
+      $file_extension2 = $demo->getClientOriginalExtension();
+      $dir2 = FileHelper::getFileDirName('demo/books');
+      $file_name2 = FileHelper::getFileNewName();
+      $demo_name = $file_name2 . '.' . $file_extension2;
+      $file_path2 = $dir2 . '/' . $file_name2 . '.' . $file_extension2;
+      $demo->move($dir2, $demo_name);
+    }
 
     $book = Book::create([
       'category_id' => $request->category_id,
@@ -125,6 +137,7 @@ class AdminController extends Controller
       'stock' => $request->stock,
       'image_path' => $file_path,
       'is_important' => $is_important,
+      'demo_file' => $file_path2,
     ]);
 
     return redirect(route('admin-books'));
@@ -173,6 +186,19 @@ class AdminController extends Controller
     }
 
 
+
+    $file_path2 = $book->demo_file;
+    $demo = $request->file('demo_file');
+    if($demo !== null) {
+      $file_extension2 = $demo->getClientOriginalExtension();
+      $dir2 = FileHelper::getFileDirName('demo/books');
+      $file_name2 = FileHelper::getFileNewName();
+      $demo_name = $file_name2 . '.' . $file_extension2;
+      $file_path2 = $dir2 . '/' . $file_name2 . '.' . $file_extension2;
+      $demo->move($dir2, $demo_name);
+    }
+
+
     $book->category_id = $request->category_id;
     $book->name = $request->name;
     $book->author = $request->author;
@@ -184,6 +210,7 @@ class AdminController extends Controller
     $book->stock = $request->stock;
     $book->image_path = $file_path;
     $book->is_important = $is_important;
+    $book->demo_file = $file_path2;
     $book->save();
 
     return redirect(route('admin-books'));

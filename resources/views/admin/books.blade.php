@@ -107,6 +107,18 @@
                                       rows="5" required></textarea>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <legend class="col-form-label col-sm-2 pt-0">نسخه دمو(pdf)</legend>
+                            <div class="col-sm-7">
+                                <input type="file" name="demo_file" accept="application/pdf" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
                     <div class="form-group row">
                         <div class="col-sm-10">
                             <button type="submit" class="btn btn-info">ثبت کتاب</button>
