@@ -1,6 +1,78 @@
 @extends('admin.dashboard')
 @section('admin_content')
-    <div class="container p-1 p-sm-2">
+
+    <!--MESSAGE MODAL-->
+    @foreach($old_orders as $order)
+    <div class="modal rtl" id="Modal{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title ml-auto" id="exampleModalLabel">اطلاعات پرداخت </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    {{--<p class="user-messages" style="font-family: 'Times New Roman'; alignment: right">--}}
+                        {{----}}
+                    {{--</p>--}}
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="text-dark" style="font-family: Vazir; font-size: 0.9rem">
+                                شماره مرجع تراکنش :
+                            </p>
+                        </div>
+                        <div class="col-md-7">
+                            <p class="text-dark" style="font-family: Vazir; font-size: 1.1rem">
+                               {{$order->payment->retrival_ref_no}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="text-dark" style="font-family: Vazir; font-size: 0.9rem">
+                                شماره پیگیری :
+                            </p>
+                        </div>
+                        <div class="col-md-7">
+                            <p class="text-dark" style="font-family: Vazir; font-size: 1.1rem">
+                                {{$order->payment->system_trace_no}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="text-dark" style="font-family: Vazir; font-size: 0.9rem">
+                                وضعیت :
+                            </p>
+                        </div>
+                        <div class="col-md-7">
+                            @if($order->payment->is_success == 1)
+                            <p class="text-dark" style="font-family: Vazir; font-size: 1.1rem">
+                                موفق
+                            </p>
+                            @else
+                                <p class="text-dark" style="font-family: Vazir; font-size: 1.1rem">
+                                    ناموفق
+                                </p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">بستن</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
+
+
+
+
+    <div class="container-fluid p-1 p-sm-2">
         <h6 class="alert alert-warning"><i class="fa fa-hourglass mr-1"></i>لیست سفارشات ارسال نشده</h6>
         <div class="table-responsive">
             <table class="table table-striped">
@@ -97,8 +169,9 @@
                     <th scope="col">تعداد</th>
                     <th scope="col">قیمت کل</th>
                     <th scope="col">اطلاعات کاربر</th>
-                    <th scope="col" style="width: 310px">آدرس</th>
+                    <th scope="col" style="width: 310px" >آدرس</th>
                     <th scope="col" style="width: 140px">کد رهگیری </th>
+                    <th scope="col" style="width: 140px">اطلاعت پرداخت</th>
 
                 </tr>
                 </thead>
@@ -154,6 +227,9 @@
                                 @endif
                             </form>
                         </td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#Modal{{$order->id}}"> مشاهده </a>
+                        </td>
 
                     </tr>
                 @endforeach
@@ -174,4 +250,7 @@
             </nav>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 @endsection

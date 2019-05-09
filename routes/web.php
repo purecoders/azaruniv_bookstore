@@ -28,9 +28,11 @@ Route::post('/admin-book-insert', 'AdminController@bookInsert')->name('admin-boo
 Route::get('/admin-book/{id}', 'AdminController@book')->name('admin-book');
 Route::post('/admin-book-edit', 'AdminController@bookEdit')->name('admin-book-edit');
 Route::post('/admin-book-remove', 'AdminController@bookRemove')->name('admin-book-remove');
+Route::get('/admin-user-remove/{id}', 'AdminController@userRemove')->name('admin-user-remove');
 
 Route::get('/admin-change-password-page', 'AdminController@changePasswordPage')->name('admin-change-password-page');
 Route::post('/admin-change-password', 'AdminController@changePassword')->name('admin-change-password');
+Route::get('/admin-backup', 'BackupController@index')->name('admin-backup');
 
 
 
@@ -59,19 +61,11 @@ Route::post('/user-cart-pay-verify', 'UserController@cartPayVerify')->name('user
 //  return view('user.profile');
 //})->name('user-profile');
 
-Route::get('/date', function (){
-  \Illuminate\Support\Facades\Artisan::call('backup:clean', []);
-  \Illuminate\Support\Facades\Artisan::call('backup:run', []);
-});
-
-
-Route::get('backup', 'BackupController@index');
 
 
 
-Route::get('/download', function (){
- echo url('backup/2019-05-09-04-59-18.zip');
-});
+
+
 
 
 

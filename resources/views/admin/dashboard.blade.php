@@ -24,7 +24,7 @@
 
                     <li class="nav-item"><a  id="adminCardNavSite"  class="nav-link text-white " href="{{route('admin-site')}}">
                             <i class="fa fa-info mr-1"></i>
-                            اطلاعات سایت
+                            اطلاعات سیستم
                         </a>
                     </li>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 
 class BackupController extends Controller
@@ -14,12 +15,12 @@ class BackupController extends Controller
   }
 
   public function index(){
-//    $disk = Storage::disk(config('laravel-backup.backup.destination.disks')[0]);
+    Artisan::call('backup:clean', []);
+    Artisan::call('backup:run', []);
+
     $disk = Storage::disk('local');
-//    $files = $disk->files(config('laravel-backup.backup.name'));
     $files = $disk->files('backup');
     $backups = [];
-    // make an array of backup files, with their filesize and creation date
     foreach ($files as $k => $f) {
       // only take the zip files into account
       if (substr($f, -4) == '.zip' && $disk->exists($f)) {
@@ -31,9 +32,12 @@ class BackupController extends Controller
         ];
       }
     }
-    // reverse the backups, so the newest one would be on top
+
     $backups = array_reverse($backups);
-    print_r($backups);
+//    print_r($backups);
+
+    return response()->download(storage_path("app/" . $backups[0]['file_path']));
+
   }
 
 }

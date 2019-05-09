@@ -6,6 +6,7 @@ use App\Book;
 use App\Category;
 use App\Order;
 use App\Slider;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -42,7 +43,8 @@ class AdminController extends Controller
 
   public function site(){
     $sliders = Slider::all();
-    return view('admin.site', compact('sliders'));
+    $users = User::where('role', '=', 'user')->get();
+    return view('admin.site', compact('sliders', 'users'));
   }
 
   public function sliderRemove(Request $request){
@@ -259,6 +261,13 @@ class AdminController extends Controller
 
 
 
+  }
+
+
+  public function userRemove($id){
+    $user = User::find($id);
+    $user->delete();
+    return back();
   }
 
 

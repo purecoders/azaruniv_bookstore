@@ -17,7 +17,7 @@ class Order extends Model
     }
 
     public function payment(){
-      return $this->hasOne('App\Payment');
+      return $this->belongsTo('App\Payment');
     }
 
     public function user(){
