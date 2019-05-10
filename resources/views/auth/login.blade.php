@@ -58,7 +58,7 @@
                                 </button>
 
                                 <a class="btn btn-link text-info" href="{{ route('password.request') }}">
-                                    رمز خود را وارد فراموش کرده اید کلیک کیند
+                                    رمز خود را وارد فراموش کرده اید کلیک کنید
                                 </a>
                             </div>
                         </div>
