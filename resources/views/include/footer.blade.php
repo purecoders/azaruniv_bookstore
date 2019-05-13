@@ -92,7 +92,7 @@
                 طراحی و توسعه
                 توسط
 
-                <a target="_blank" class="text-success hover-link ml-1" href="https://www.ezitech.ir/">EziTech </a>
+                <a target="_blank" class="text-success hover-link ml-1" href="http://www.ezitech.ir/">EziTech </a>
                 <span class="mx-4 "></span>
             </p>
         </div>
